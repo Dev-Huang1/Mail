@@ -18,10 +18,10 @@ export async function sendEmailAction(
     const data = emailFormSchema.parse(Object.fromEntries(formData))
     
     // Send email using Resend
-    const { nickname, domainPrefix, domain, email, subject, message } = data
+    const { nickname, domainPrefix, email, subject, message } = data
     
     await resend.emails.send({
-      from: `${nickname} <${domainPrefix}@${domain}>`,
+      from: `${nickname} <${domainPrefix}@xyehr.cn>`,
       to: email,
       subject: subject,
       text: message,
@@ -31,7 +31,6 @@ export async function sendEmailAction(
       defaultValues: {
         nickname: '',
         domainPrefix: '',
-        domain: '',
         email: '',
         subject: '',
         message: '',
