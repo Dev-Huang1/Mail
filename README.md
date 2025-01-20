@@ -41,10 +41,11 @@ Then fill in the .env file:
 RESEND_API_KEY=YOUR_RESEND_API_KEY
 ```
 
-And fill in your access password:
+And fill in your access password and domain(Without https:///):
 
 ```env
 ACCESS_PASSWORD=123456
+DOMAIN=example.com
 ```
 
 Then run 
