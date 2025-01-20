@@ -1,44 +1,34 @@
-'use client'
+"use client"
 
-import * as React from 'react'
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { cn } from '@/lib/utils'
+import * as React from "react"
+import { Card, CardTitle, CardHeader, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Textarea } from "@/components/ui/textarea"
+import { cn } from "@/lib/utils"
 
-import { sendEmailAction } from '@/lib/actions'
-import { Check, Mail } from 'lucide-react'
+import { sendEmailAction } from "@/lib/actions"
+import { Check, Mail } from "lucide-react"
 
-export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
+export function EmailForm({ className, domain }: React.ComponentProps<typeof Card> & { domain: string }) {
   const [state, formAction, pending] = React.useActionState(sendEmailAction, {
     defaultValues: {
-      nickname: '',
-      domainPrefix: '',
-      domain: '',
-      email: '',
-      subject: '',
-      message: '',
+      nickname: "",
+      domainPrefix: "",
+      email: "",
+      subject: "",
+      message: "",
     },
     success: false,
     errors: null,
   })
 
   return (
-    <Card className={cn('w-full max-w-md', className)}>
+    <Card className={cn("w-full max-w-md", className)}>
       <CardHeader>
         <CardTitle>Send an Email</CardTitle>
-        <CardDescription>
-          Send emails using @xyehr.cn
-        </CardDescription>
+        <CardDescription>Send emails using @{domain}</CardDescription>
       </CardHeader>
       <form action={formAction}>
         <CardContent className="flex flex-col gap-6">
@@ -48,17 +38,9 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
               Email sent successfully!
             </p>
           ) : null}
-          {state.errors?.form ? (
-            <p className="text-destructive text-sm">{state.errors.form}</p>
-          ) : null}
-          <div
-            className="group/field grid gap-2"
-            data-invalid={!!state.errors?.nickname}
-          >
-            <Label
-              htmlFor="nickname"
-              className="group-data-[invalid=true]/field:text-destructive"
-            >
+          {state.errors?.form ? <p className="text-destructive text-sm">{state.errors.form}</p> : null}
+          <div className="group/field grid gap-2" data-invalid={!!state.errors?.nickname}>
+            <Label htmlFor="nickname" className="group-data-[invalid=true]/field:text-destructive">
               Nickname <span aria-hidden="true">*</span>
             </Label>
             <Input
@@ -77,14 +59,8 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
               </p>
             )}
           </div>
-          <div
-            className="group/field grid gap-2"
-            data-invalid={!!state.errors?.domainPrefix}
-          >
-            <Label
-              htmlFor="domainPrefix"
-              className="group-data-[invalid=true]/field:text-destructive"
-            >
+          <div className="group/field grid gap-2" data-invalid={!!state.errors?.domainPrefix}>
+            <Label htmlFor="domainPrefix" className="group-data-[invalid=true]/field:text-destructive">
               Domain Prefix <span aria-hidden="true">*</span>
             </Label>
             <div className="flex items-center gap-2">
@@ -98,18 +74,7 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
                 aria-errormessage="error-domainPrefix"
                 defaultValue={state.defaultValues.domainPrefix}
               />
-              <div className="flex items-center gap-2">
-              <span className="text-muted-foreground">@</span>
-              <Input
-                id="domain"
-                name="domain"
-                placeholder="example.com"
-                className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive"
-                disabled={pending}
-                aria-invalid={!!state.errors?.domain}
-                aria-errormessage="error-domain"
-                defaultValue={state.defaultValues.domain}
-              />
+              <span className="text-muted-foreground">@{domain}</span>
             </div>
             {state.errors?.domainPrefix && (
               <p id="error-domainPrefix" className="text-destructive text-sm">
@@ -117,14 +82,8 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
               </p>
             )}
           </div>
-          <div
-            className="group/field grid gap-2"
-            data-invalid={!!state.errors?.email}
-          >
-            <Label
-              htmlFor="email"
-              className="group-data-[invalid=true]/field:text-destructive"
-            >
+          <div className="group/field grid gap-2" data-invalid={!!state.errors?.email}>
+            <Label htmlFor="email" className="group-data-[invalid=true]/field:text-destructive">
               To Email <span aria-hidden="true">*</span>
             </Label>
             <Input
@@ -144,14 +103,8 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
               </p>
             )}
           </div>
-          <div
-            className="group/field grid gap-2"
-            data-invalid={!!state.errors?.subject}
-          >
-            <Label
-              htmlFor="subject"
-              className="group-data-[invalid=true]/field:text-destructive"
-            >
+          <div className="group/field grid gap-2" data-invalid={!!state.errors?.subject}>
+            <Label htmlFor="subject" className="group-data-[invalid=true]/field:text-destructive">
               Subject <span aria-hidden="true">*</span>
             </Label>
             <Input
@@ -170,14 +123,8 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
               </p>
             )}
           </div>
-          <div
-            className="group/field grid gap-2"
-            data-invalid={!!state.errors?.message}
-          >
-            <Label
-              htmlFor="message"
-              className="group-data-[invalid=true]/field:text-destructive"
-            >
+          <div className="group/field grid gap-2" data-invalid={!!state.errors?.message}>
+            <Label htmlFor="message" className="group-data-[invalid=true]/field:text-destructive">
               Message <span aria-hidden="true">*</span>
             </Label>
             <Textarea
@@ -200,7 +147,7 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
         <CardFooter>
           <Button type="submit" size="sm" disabled={pending}>
             {pending ? (
-              'Sending...'
+              "Sending..."
             ) : (
               <>
                 <Mail className="mr-2 size-4" />
@@ -213,3 +160,4 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
     </Card>
   )
 }
+
