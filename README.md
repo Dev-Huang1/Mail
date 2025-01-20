@@ -2,8 +2,6 @@
 
 This is a resend email sending web application built with NextJS, Password protected.
 
-[mail.xyehr.cn](https://mail.xyehr.cn)
-
 <p>
 
 <a href="https://vercel.com/tech-art/mail" target="_blank"><img src="https://vercelbadge.vercel.app/api/Dev-Huang1/Mail?style=flat-square" alt="Vercel Project Status"></a>
@@ -31,6 +29,12 @@ This is a resend email sending web application built with NextJS, Password prote
 ## Deploy
 
 Get the [Resend API KEY](https://resend.com)
+
+> [!NOTE]\
+> How to get Resend API KEY? 
+> [Learn the doc](https://resend.com/docs/dashboard/api-keys/introduction)
+
+
 Then fill in the .env file: 
 
 ```env
