@@ -23,6 +23,7 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
     defaultValues: {
       nickname: '',
       domainPrefix: '',
+      domain: '',
       email: '',
       subject: '',
       message: '',
@@ -97,7 +98,18 @@ export function EmailForm({ className }: React.ComponentProps<typeof Card>) {
                 aria-errormessage="error-domainPrefix"
                 defaultValue={state.defaultValues.domainPrefix}
               />
-              <span className="text-muted-foreground">@xyehr.cn</span>
+              <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">@</span>
+              <Input
+                id="domain"
+                name="domain"
+                placeholder="example.com"
+                className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive"
+                disabled={pending}
+                aria-invalid={!!state.errors?.domain}
+                aria-errormessage="error-domain"
+                defaultValue={state.defaultValues.domain}
+              />
             </div>
             {state.errors?.domainPrefix && (
               <p id="error-domainPrefix" className="text-destructive text-sm">
