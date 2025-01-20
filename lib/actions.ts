@@ -1,27 +1,22 @@
-'use server'
+"use server"
 
-import { emailFormSchema } from '@/lib/schema'
-import { z } from 'zod'
-import { Resend } from 'resend'
+import { emailFormSchema } from "@/lib/schema"
+import { z } from "zod"
+import { Resend } from "resend"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function sendEmailAction(
-  _prevState: unknown,
-  formData: FormData
-) {
-  const defaultValues = z
-    .record(z.string(), z.string())
-    .parse(Object.fromEntries(formData.entries()))
+export async function sendEmailAction(_prevState: unknown, formData: FormData) {
+  const defaultValues = z.record(z.string(), z.string()).parse(Object.fromEntries(formData.entries()))
 
   try {
     const data = emailFormSchema.parse(Object.fromEntries(formData))
-    
+
     // Send email using Resend
     const { nickname, domainPrefix, email, subject, message } = data
-    
+
     await resend.emails.send({
-      from: `${nickname} <${domainPrefix}@xyehr.cn>`,
+      from: `${nickname} <${domainPrefix}@${process.env.DOMAIN}>`,
       to: email,
       subject: subject,
       text: message,
@@ -29,11 +24,11 @@ export async function sendEmailAction(
 
     return {
       defaultValues: {
-        nickname: '',
-        domainPrefix: '',
-        email: '',
-        subject: '',
-        message: '',
+        nickname: "",
+        domainPrefix: "",
+        email: "",
+        subject: "",
+        message: "",
       },
       success: true,
       errors: null,
@@ -44,10 +39,7 @@ export async function sendEmailAction(
         defaultValues,
         success: false,
         errors: Object.fromEntries(
-          Object.entries(error.flatten().fieldErrors).map(([key, value]) => [
-            key,
-            value?.join(', '),
-          ])
+          Object.entries(error.flatten().fieldErrors).map(([key, value]) => [key, value?.join(", ")]),
         ),
       }
     }
@@ -56,8 +48,9 @@ export async function sendEmailAction(
       defaultValues,
       success: false,
       errors: {
-        form: 'Failed to send email. Please try again.',
+        form: "Failed to send email. Please try again.",
       },
     }
   }
 }
+
