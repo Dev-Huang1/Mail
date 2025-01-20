@@ -2,6 +2,8 @@
 
 This is a resend email sending web application built with NextJS, Password protected.
 
+[mail.xyehr.cn](https://mail.xyehr.cn)
+
 <p>
 
 <a href="https://vercel.com/tech-art/mail" target="_blank"><img src="https://vercelbadge.vercel.app/api/Dev-Huang1/Mail?style=flat-square" alt="Vercel Project Status"></a>
