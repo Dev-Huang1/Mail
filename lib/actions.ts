@@ -35,7 +35,7 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
         message: "",
       },
       success: true,
-      errors: null,
+      errors: '',
     }
   } catch (error) {
     if (error instanceof z.ZodError) {
