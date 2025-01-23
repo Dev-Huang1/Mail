@@ -24,7 +24,7 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
       isHtml: false,
     },
     success: false,
-    errors: '',
+    errors: null,
   })
 
   async function handleSubmit(formData: FormData) {
@@ -175,4 +175,3 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
     </Card>
   )
 }
-
