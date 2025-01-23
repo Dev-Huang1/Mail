@@ -14,7 +14,7 @@ import { Check, Mail } from "lucide-react"
 
 export function EmailForm({ className, domain }: React.ComponentProps<typeof Card> & { domain: string }) {
   const [isHtml, setIsHtml] = React.useState(false)
-  const [state, formAction, pending] = React.useFormState(sendEmailAction, {
+  const [state, formAction, pending] = React.useActionState(sendEmailAction, {
     defaultValues: {
       nickname: "",
       domainPrefix: "",
@@ -24,7 +24,7 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
       isHtml: false,
     },
     success: false,
-    errors: null,
+    errors: '',
   })
 
   async function handleSubmit(formData: FormData) {
