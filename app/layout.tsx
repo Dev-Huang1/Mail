@@ -11,8 +11,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'TechArt Email Cosole',
-  description: 'Send email using @xyehr.cn',
+  title: 'Email Cosole',
+  description: 'Send email',
 }
 
 export default function RootLayout({
