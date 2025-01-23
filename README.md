@@ -49,7 +49,7 @@ DOMAIN=example.com
 ```
 
 > [!NOTE]\
-> You can also go to [app/layout.ts](app/layout.ts) to change the title and description
+> You can also go to [app/layout.tsx](app/layout.tsx) to change the title and description
 
 Then run 
 
