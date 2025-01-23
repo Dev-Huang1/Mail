@@ -6,12 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
+import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 
 import { sendEmailAction } from "@/lib/actions"
 import { Check, Mail } from "lucide-react"
 
 export function EmailForm({ className, domain }: React.ComponentProps<typeof Card> & { domain: string }) {
+  const [isHtml, setIsHtml] = React.useState(false)
   const [state, formAction, pending] = React.useActionState(sendEmailAction, {
     defaultValues: {
       nickname: "",
@@ -19,10 +21,16 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
       email: "",
       subject: "",
       message: "",
+      isHtml: false,
     },
     success: false,
     errors: null,
   })
+
+  async function handleSubmit(formData: FormData) {
+    formData.append("isHtml", isHtml.toString())
+    await formAction(formData)
+  }
 
   return (
     <Card className={cn("w-full max-w-md", className)}>
@@ -30,7 +38,7 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
         <CardTitle>Send an Email</CardTitle>
         <CardDescription>Send emails using @{domain}</CardDescription>
       </CardHeader>
-      <form action={formAction}>
+      <form action={handleSubmit}>
         <CardContent className="flex flex-col gap-6">
           {state.success ? (
             <p className="text-muted-foreground flex items-center gap-2 text-sm">
@@ -123,19 +131,26 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
               </p>
             )}
           </div>
+          <div className="flex items-center space-x-2">
+            <Switch id="html-mode" checked={isHtml} onCheckedChange={setIsHtml} disabled={pending} />
+            <Label htmlFor="html-mode">Send as HTML</Label>
+          </div>
           <div className="group/field grid gap-2" data-invalid={!!state.errors?.message}>
             <Label htmlFor="message" className="group-data-[invalid=true]/field:text-destructive">
-              Message <span aria-hidden="true">*</span>
+              {isHtml ? "HTML Content" : "Message"} <span aria-hidden="true">*</span>
             </Label>
             <Textarea
               id="message"
               name="message"
-              placeholder="Type your message here..."
-              className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive"
+              placeholder={
+                isHtml ? "<!DOCTYPE html><html><body><h1>Hello</h1></body></html>" : "Type your message here..."
+              }
+              className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive font-mono"
               disabled={pending}
               aria-invalid={!!state.errors?.message}
               aria-errormessage="error-message"
               defaultValue={state.defaultValues.message}
+              rows={10}
             />
             {state.errors?.message && (
               <p id="error-message" className="text-destructive text-sm">
