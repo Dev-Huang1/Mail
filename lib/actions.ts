@@ -10,16 +10,20 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
   const defaultValues = z.record(z.string(), z.string()).parse(Object.fromEntries(formData.entries()))
 
   try {
-    const data = emailFormSchema.parse(Object.fromEntries(formData))
+    const data = emailFormSchema.parse({
+      ...Object.fromEntries(formData.entries()),
+      isHtml: formData.get("isHtml") === "true",
+    })
 
     // Send email using Resend
-    const { nickname, domainPrefix, email, subject, message } = data
+    const { nickname, domainPrefix, email, subject, message, isHtml } = data
 
     await resend.emails.send({
       from: `${nickname} <${domainPrefix}@${process.env.DOMAIN}>`,
       to: email,
       subject: subject,
-      text: message,
+      html: isHtml ? message : undefined,
+      text: !isHtml ? message : undefined,
     })
 
     return {
