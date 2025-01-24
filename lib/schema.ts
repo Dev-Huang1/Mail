@@ -20,4 +20,6 @@ export const emailFormSchema = z.object({
     .min(2, { message: "Message must be at least 2 characters" })
     .max(1000000000000000, { message: "Message must be at most 1000000000000000 characters" }),
   isHtml: z.boolean().default(false),
+  useHtmlTemplate: z.boolean().default(false),
 })
+
