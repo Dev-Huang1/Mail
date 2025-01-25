@@ -136,7 +136,6 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
               </p>
             )}
           </div>
-          <div className="flex items-center space-x-2">
           {!isHtml && (
             <div className="flex items-center space-x-2">
               <Checkbox
@@ -148,6 +147,7 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
               <Label htmlFor="use-html-template">Send with HTML Template</Label>
             </div>
           )}
+          <div className="flex items-center space-x-2">
             <Switch
               id="html-mode"
               checked={isHtml}
