@@ -99,10 +99,11 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
       ...Object.fromEntries(formData.entries()),
       isHtml: formData.get("isHtml") === "true",
       useHtmlTemplate: formData.get("useHtmlTemplate") === "true",
+      attachment: formData.get("attachment") as File | null,
     })
 
     // Send email using Resend
-    const { nickname, domainPrefix, email, subject, message, isHtml, useHtmlTemplate } = data
+    const { nickname, domainPrefix, email, subject, message, isHtml, useHtmlTemplate, attachment } = data
 
     let htmlContent: string | undefined
     let textContent: string | undefined
@@ -115,13 +116,25 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
       textContent = message
     }
 
-    await resend.emails.send({
+    const emailData: any = {
       from: `${nickname} <${domainPrefix}@${process.env.DOMAIN}>`,
       to: email,
       subject: subject,
       html: htmlContent,
       text: textContent,
-    })
+    }
+
+    if (attachment) {
+      const buffer = await attachment.arrayBuffer()
+      emailData.attachments = [
+        {
+          filename: attachment.name,
+          content: Buffer.from(buffer),
+        },
+      ]
+    }
+
+    await resend.emails.send(emailData)
 
     return {
       defaultValues: {
