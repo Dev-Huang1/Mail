@@ -11,11 +11,12 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { cn } from "@/lib/utils"
 
 import { sendEmailAction } from "@/lib/actions"
-import { Check, Mail } from "lucide-react"
+import { Check, Mail, Paperclip } from "lucide-react"
 
 export function EmailForm({ className, domain }: React.ComponentProps<typeof Card> & { domain: string }) {
   const [isHtml, setIsHtml] = React.useState(false)
   const [useHtmlTemplate, setUseHtmlTemplate] = React.useState(false)
+  const [hasAttachment, setHasAttachment] = React.useState(false)
   const [state, formAction, pending] = React.useActionState(sendEmailAction, {
     defaultValues: {
       nickname: "",
@@ -136,6 +137,17 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
             )}
           </div>
           <div className="flex items-center space-x-2">
+          {!isHtml && (
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                id="use-html-template"
+                checked={useHtmlTemplate}
+                onCheckedChange={setUseHtmlTemplate}
+                disabled={pending || isHtml}
+              />
+              <Label htmlFor="use-html-template">Send with HTML Template</Label>
+            </div>
+          )}
             <Switch
               id="html-mode"
               checked={isHtml}
@@ -149,15 +161,29 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
             />
             <Label htmlFor="html-mode">Send as HTML</Label>
           </div>
-          {!isHtml && (
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="use-html-template"
-                checked={useHtmlTemplate}
-                onCheckedChange={setUseHtmlTemplate}
-                disabled={pending || isHtml}
+          <div className="flex items-center space-x-2">
+            <Switch id="has-attachment" checked={hasAttachment} onCheckedChange={setHasAttachment} disabled={pending} />
+            <Label htmlFor="has-attachment">Include Attachment</Label>
+          </div>
+          {hasAttachment && (
+            <div className="group/field grid gap-2" data-invalid={!!state.errors?.attachment}>
+              <Label htmlFor="attachment" className="group-data-[invalid=true]/field:text-destructive">
+                Attachment
+              </Label>
+              <Input
+                id="attachment"
+                name="attachment"
+                type="file"
+                className="group-data-[invalid=true]/field:border-destructive focus-visible:group-data-[invalid=true]/field:ring-destructive"
+                disabled={pending}
+                aria-invalid={!!state.errors?.attachment}
+                aria-errormessage="error-attachment"
               />
-              <Label htmlFor="use-html-template">Send with HTML Template</Label>
+              {state.errors?.attachment && (
+                <p id="error-attachment" className="text-destructive text-sm">
+                  {state.errors.attachment}
+                </p>
+              )}
             </div>
           )}
           <div className="group/field grid gap-2" data-invalid={!!state.errors?.message}>
