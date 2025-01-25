@@ -229,4 +229,3 @@ export function EmailForm({ className, domain }: React.ComponentProps<typeof Car
     </Card>
   )
 }
-
