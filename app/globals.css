@@ -2,12 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://cdn.xyehr.cn/font/ECA.css");
-
-body {
-  font-family: "ECA-L";
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
