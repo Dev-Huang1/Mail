@@ -21,6 +21,6 @@ export const emailFormSchema = z.object({
     .max(1000000000000000, { message: "Message must be at most 1000000000000000 characters" }),
   isHtml: z.boolean().default(false),
   useHtmlTemplate: z.boolean().default(false),
-  attachment: z.instanceof(File).optional(),
+  attachment: z.any().optional().nullable(),
 })
 
