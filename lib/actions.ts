@@ -7,143 +7,196 @@ import { Resend } from "resend"
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const htmlTemplate = `
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://cdn.xyehr.cn/images/svg/ta.svg" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://cdn.xyehr.cn/images/svg/x.svg" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://cdn.xyehr.cn/images/svg/github.svg" />
+    <link
+      rel="preload"
+      as="image"
+      href="https://cdn.xyehr.cn/images/svg/youtube.svg" />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <meta name="x-apple-disable-message-reformatting" />
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        mso-font-alt: 'Helvetica';
+        src: url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap) format('woff2');
+      }
+
+      * {
+        font-family: 'Inter', Helvetica, Arial, sans-serif;
+      }
+    </style>
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        mso-font-alt: 'Helvetica';
+        src: url(https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap) format('woff2');
+      }
+
+      * {
+        font-family: 'Inter', Helvetica, Arial, sans-serif;
+      }
+    </style>
+    <style>
       @font-face {
         font-family: 'ECA-L';
-        src: url('https://cdn.xyehr.cn/font/source/ECA-Light.ttf') format('truetype');
-        font-weight: normal;
         font-style: normal;
+        font-weight: 400;
+        mso-font-alt: 'Helvetica';
+        src: url(https://cdn.xyehr.cn/font/source/ECA-Light.ttf) format('truetype');
       }
 
-      body {
-        margin: 0;
-        padding: 0;
-        background-color: #fff;
-        font-family:  Helvetica, Arial, sans-serif;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      .email-container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #ffffff;
-        font-family: 'ECA-L'
-      }
-      
-      .email-container h1 {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      }
-
-      h1 {
-        font-size: 24px;
-        font-weight: 600;
-        color: #333333;
-        margin-bottom: 20px;
-      }
-
-      h2 {
-        font-size: 20px;
-        font-weight: 600;
-        color: #333333;
-        margin-top: 30px;
-        margin-bottom: 15px;
-      }
-
-      p {
-        font-size: 16px;
-        line-height: 1.6;
-        color: #555555;
-        margin-bottom: 15px;
-      }
-
-      .logo {
-        width: 64px;
-        height: auto;
-        margin-bottom: 20px;
-      }
-
-      .footer {
-        margin-top: 40px;
-        padding-top: 20px;
-        border-top: 1px solid #e8e8e8;
-        font-size: 10px;
-        color: #888888;
-        font-family: 'ECA-L';
-      }
-
-      .primary-color {
-        color: #0066FF;
-      }
-
-      a {
-        color: #0066FF;
-        text-decoration: none;
-      }
-
-      .social-icons {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 15px;
-      }
-      
-      .social-icons img {
-        width: 32px;
-        height: auto;
-        opacity: 0.7;
-        transition: opacity 0.2s ease;
-      }
-      
-      .social-icons a:hover img {
-        opacity: 1;
-      }
-
-      @media only screen and (max-width: 480px) {
-        .email-container {
-          width: 100% !important;
-          padding: 10px !important;
-        }
+      * {
+        font-family: 'ECA-L', Helvetica, Arial, sans-serif;
       }
     </style>
   </head>
-  <body>
-    <div class="email-container">
-      <img src="https://cdn.xyehr.cn/images/svg/ta.svg" alt="logo" class="logo" />
-      
-      <h1>{subject}</h1>
-      
-      <p>{content}</p>
-      
-      <div class="footer">        
-        <div class="social-icons">
-          <a href="https://x.com/Tech__Art" target="_blank">
-            <img src="https://cdn.xyehr.cn/images/svg/x.svg" alt="X" />
-          </a>
-          <a href="https://github.com/TechArt_Studio" target="_blank">
-            <img src="https://cdn.xyehr.cn/images/svg/github.svg" alt="GitHub" />
-          </a>
-          <a href="https://youtube.com/Tech-Art-Studio" target="_blank">
-            <img src="https://cdn.xyehr.cn/images/svg/youtube.svg" alt="YouTube" />
-          </a>
-        </div>
-      
-        <p>© 2025 Tech-Art Studio</p>
-      
-        <p>If you want to know more about our studio, please visit our website or contact us through social media.</p>
-        <p>This studio (hereinafter referred to as the "Studio") provides various technical services based on web and front-end development. The services provided by the studio include but are not limited to: customized front-end development, design services, project consulting, and application development based on Next.js and Python.</p>
-        <p>Our services are regulated by Chinese and EU laws and regulations. To ensure the security of customer information, we always follow data protection regulations and strictly implement privacy protection policies in all service processes. If you have any questions about our services or need further information, please feel free to contact us through our customer service channels.</p>
-        <p>For services related to code hosting, deployment and development processes, we will operate on major platforms such as GitHub and Vercel to ensure the efficiency and security of the service.</p>
-        
-        <img src="https://cdn.xyehr.cn/images/svg/ta.svg" alt="logo" class="logo"/>
+  <body
+    style="background-color:rgb(255,255,255);margin:0px;padding:0px;font-family:Helvetica, Arial, sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%">
+    <!--$-->
+    <div
+      style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
+      {subject}
+      <div>
+         ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿ ‌‍‎‏﻿
       </div>
     </div>
+    <table
+      align="center"
+      width="100%"
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      role="presentation"
+      style="max-width:600px;margin-left:auto;margin-right:auto;padding:20px;background-color:rgb(255,255,255);font-family:ECA-L, Helvetica, Arial, sans-serif">
+      <tbody>
+        <tr style="width:100%">
+          <td>
+            <img
+              alt="logo"
+              height="auto"
+              src="https://cdn.xyehr.cn/images/svg/ta.svg"
+              style="margin-bottom:20px;display:block;outline:none;border:none;text-decoration:none"
+              width="64" />
+            <h1
+              style="font-size:24px;font-weight:600;color:rgb(51,51,51);margin-bottom:20px;font-family:&#x27;Inter&#x27;, -apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, Roboto, Helvetica, Arial, sans-serif">
+              {subject}
+            </h1>
+            <p
+              style="font-size:16px;line-height:1.6;color:rgb(85,85,85);margin-bottom:15px;margin-top:16px">
+              {content}
+            </p>
+            <hr
+              style="border-top-width:1px;border-color:rgb(232,232,232);margin-top:40px;margin-bottom:40px;padding-top:20px;width:100%;border:none;border-top:1px solid #eaeaea" />
+            <table
+              align="center"
+              width="100%"
+              border="0"
+              cellpadding="0"
+              cellspacing="0"
+              role="presentation"
+              style="margin-bottom:15px">
+              <tbody>
+                <tr>
+                  <td>
+                    <div style="display:flex;gap:12px">
+                      <a
+                        href="https://x.com/Tech__Art"
+                        style="color:#067df7;text-decoration-line:none"
+                        target="_blank"
+                        ><img
+                          alt="X"
+                          height="auto"
+                          src="https://cdn.xyehr.cn/images/svg/x.svg"
+                          style="display:block;outline:none;border:none;text-decoration:none;opacity:0.7"
+                          width="32" /></a
+                      ><a
+                        href="https://github.com/TechArt_Studio"
+                        style="color:#067df7;text-decoration-line:none"
+                        target="_blank"
+                        ><img
+                          alt="GitHub"
+                          height="auto"
+                          src="https://cdn.xyehr.cn/images/svg/github.svg"
+                          style="display:block;outline:none;border:none;text-decoration:none;opacity:0.7"
+                          width="32" /></a
+                      ><a
+                        href="https://youtube.com/Tech-Art-Studio"
+                        style="color:#067df7;text-decoration-line:none"
+                        target="_blank"
+                        ><img
+                          alt="YouTube"
+                          height="auto"
+                          src="https://cdn.xyehr.cn/images/svg/youtube.svg"
+                          style="display:block;outline:none;border:none;text-decoration:none;opacity:0.7"
+                          width="32"
+                      /></a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p
+              style="font-size:16px;color:rgb(136,136,136);line-height:24px;font-family:ECA-L, Helvetica, Arial, sans-serif;margin-bottom:16px;margin-top:16px">
+              © 2025 Tech-Art Studio
+            </p>
+            <p
+              style="font-size:14px;color:rgb(136,136,136);line-height:24px;font-family:ECA-L, Helvetica, Arial, sans-serif;margin-bottom:16px;margin-top:16px">
+              If you want to know more about our studio, please visit our
+              website or contact us through social media.
+            </p>
+            <p
+              style="font-size:14px;color:rgb(136,136,136);line-height:24px;font-family:ECA-L, Helvetica, Arial, sans-serif;margin-bottom:16px;margin-top:16px">
+              This studio (hereinafter referred to as the &quot;Studio&quot;)
+              provides various technical services based on web and front-end
+              development. The services provided by the studio include but are
+              not limited to: customized front-end development, design services,
+              project consulting, and application development based on Next.js
+              and Python.
+            </p>
+            <p
+              style="font-size:14px;color:rgb(136,136,136);line-height:24px;font-family:ECA-L, Helvetica, Arial, sans-serif;margin-bottom:16px;margin-top:16px">
+              Our services are regulated by Chinese and EU laws and regulations.
+              To ensure the security of customer information, we always follow
+              data protection regulations and strictly implement privacy
+              protection policies in all service processes. If you have any
+              questions about our services or need further information, please
+              feel free to contact us through our customer service channels.
+            </p>
+            <p
+              style="font-size:14px;color:rgb(136,136,136);line-height:24px;font-family:ECA-L, Helvetica, Arial, sans-serif;margin-bottom:16px;margin-top:16px">
+              For services related to code hosting, deployment and development
+              processes, we will operate on major platforms such as GitHub and
+              Vercel to ensure the efficiency and security of the service.
+            </p>
+            <img
+              alt="logo"
+              height="auto"
+              src="https://cdn.xyehr.cn/images/svg/ta.svg"
+              style="margin-top:10px;display:block;outline:none;border:none;text-decoration:none"
+              width="64" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--7--><!--/$-->
   </body>
 </html>
 `
