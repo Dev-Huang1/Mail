@@ -5,6 +5,7 @@ import { z } from "zod"
 import { Resend } from "resend"
 import EmailTemplate from "@/components/email-template"
 import { render } from "@react-email/render"
+import React from "react"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -32,7 +33,11 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
       htmlContent = message
     } else if (useHtmlTemplate) {
       // Use the React Email template
-      const emailHtml = render(<EmailTemplate subject={subject} content={message} />)
+      const emailComponent = React.createElement(EmailTemplate, {
+        subject: subject,
+        content: message,
+      })
+      const emailHtml = render(emailComponent)
       htmlContent = emailHtml
     } else {
       textContent = message
