@@ -3,9 +3,6 @@
 import { emailFormSchema } from "@/lib/schema"
 import { z } from "zod"
 import { Resend } from "resend"
-import EmailTemplate from "@/components/email-template"
-import { render } from "@react-email/render"
-import React from "react"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -86,9 +83,7 @@ export async function sendEmailAction(_prevState: unknown, formData: FormData) {
       console.log("Using HTML template")
       try {
         // 使用简单的字符串替换方法而不是React组件
-        htmlContent = fallbackHtmlTemplate
-          .replace('{subject}', subject)
-          .replace('{content}', message)
+        htmlContent = fallbackHtmlTemplate.replace("{subject}", subject).replace("{content}", message)
         console.log("HTML template applied successfully")
       } catch (error) {
         console.error("Error applying HTML template:", error)
@@ -207,4 +202,7 @@ export async function contactFormAction(_prevState: unknown, formData: FormData)
 
   return {
     defaultValues: { name: "", email: "", message: "" },
-    success:
+    success: true,
+    errors: null,
+  }
+}
